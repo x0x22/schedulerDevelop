@@ -1,4 +1,5 @@
 package com.study.scheduler.repository;
 
-public class SchedulerRepositoryImpl {
+public class SchedulerRepositoryImpl implements SchedulerRepository{
+
 }

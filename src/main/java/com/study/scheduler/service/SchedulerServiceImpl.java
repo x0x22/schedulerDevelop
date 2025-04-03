@@ -1,4 +1,5 @@
 package com.study.scheduler.service;
 
-public class SchedulerServiceImpl {
+public class SchedulerServiceImpl implements SchedulerService{
+
 }
