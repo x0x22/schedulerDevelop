@@ -1,9 +1,11 @@
 package com.study.scheduler.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
 
+@Getter
 @Entity
 @Table(name = "schedules")
 public class Todo extends BaseEntity{
@@ -24,4 +26,16 @@ public class Todo extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Todo(){
+    }
+
+    public Todo(String title,String content,Date todoDate){
+        this.title = title;
+        this.content = content;
+        this.todoDate = todoDate;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
 }
