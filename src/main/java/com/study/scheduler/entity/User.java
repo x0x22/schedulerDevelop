@@ -1,11 +1,12 @@
 package com.study.scheduler.entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class User extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,5 +23,15 @@ public class UserEntity extends BaseEntity{
 
     @Column(nullable = false)
     private String email;
+
+    public User(){
+    }
+
+    public User(String userid, String username, String passwords, String email){
+        this.userid = userid;
+        this.username = username;
+        this.passwords = passwords;
+        this.email = email;
+    }
 
 }

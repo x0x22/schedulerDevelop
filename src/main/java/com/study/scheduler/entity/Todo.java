@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "schedules")
-public class TodoEntity extends BaseEntity{
+public class Todo extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,6 @@ public class TodoEntity extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+    private User user;
 
 }
