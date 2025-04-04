@@ -1,6 +1,7 @@
 package com.study.scheduler.controller;
 
 import com.study.scheduler.requestDto.SignUpRequestDto;
+import com.study.scheduler.requestDto.UpdatePasswordRequestDto;
 import com.study.scheduler.responseDto.SignUpResponseDto;
 import com.study.scheduler.responseDto.UserResponseDto;
 import com.study.scheduler.service.UserService;
@@ -30,12 +31,22 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto,HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> findById(@PathVariable Long id){
-        UserResponseDto userResponseDto = userService.findById(id);
+    @GetMapping("/{userid}")
+    public ResponseEntity<UserResponseDto> findById(@PathVariable String userid){
+        UserResponseDto userResponseDto = userService.findById(userid);
 
         return new ResponseEntity<>(userResponseDto,HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{userid}")
+    public ResponseEntity<Void> updatePassword(
+            @PathVariable String userid,
+            @RequestBody UpdatePasswordRequestDto requestDto
+            ){
+
+        userService.updatePassword(userid, requestDto.getOldPassword(),requestDto.getNewPassword());
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
 }

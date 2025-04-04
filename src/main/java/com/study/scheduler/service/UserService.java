@@ -8,6 +8,7 @@ import com.study.scheduler.responseDto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import org.w3c.dom.html.HTMLTableCaptionElement;
 
@@ -28,17 +29,29 @@ public class UserService {
         return new SignUpResponseDto(saveUser.getUserid(),saveUser.getUsername());
     }
 
-    public UserResponseDto findById(Long id) {
+    public UserResponseDto findById(String userid) {
 
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findByUserid(userid);
 
         if (optionalUser.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + userid);
         }
 
         User findUser = optionalUser.get();
 
         return new UserResponseDto(findUser.getUserid(), findUser.getUsername(), findUser.getEmail());
 
+    }
+
+    @Transactional
+    public void updatePassword(String userid, String oldPassword, String newPassword) {
+
+        User findUser = userRepository.findByUserIdOrElseThrow(userid);
+
+        if (!findUser.getPasswords().equals(oldPassword)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"비밀번호가 일치하지 않습니다.");
+        }
+
+        findUser.updatePassword(newPassword);
     }
 }
